@@ -1,108 +1,64 @@
 from random import choice
-rounds = 1
-throws = 1
-player_one_score = 0
-player_two_score = 0
-player_one_round_one_total = 0
-player_two_round_one_total = 0
-player_one_round_two_total = 0
-player_two_round_two_total = 0
-player_one_round_three_total = 0
-player_two_round_three_total = 0
-player_one_match_total = 0
-player_two_match_total = 0
 
-print("WELCOME TO THE HOUSE OF AXE THROWING!!!!")
+def get_player_input(player_name, round_number, throw_number):
+    return int(input(f"{player_name} SCORES A: "))
 
-player_one = input(
-    "PLEASE ENTER THE NAME OF THE FIRST PLAYER: ").strip().upper()
+def print_round_score(player_name, round_total):
+    print(f"The score is {player_name} {round_total}")
 
-player_two = input(
-    "PLEASE ENTER THE NAME OF THE SECOND PLAYER: ").strip().upper()
+def play_round(player_one, player_two, round_number):
+    round_total = [0, 0]
+    for throw in range(5):
+        print(f"ROUND NUMBER {round_number}, THROW NUMBER {throw + 1}")
+        scores = [get_player_input(player_one, round_number, throw + 1),
+                  get_player_input(player_two, round_number, throw + 1)]
+        round_total = [round_total[i] + scores[i] for i in range(2)]
+        print_round_score(player_one, round_total[0])
+        print_round_score(player_two, round_total[1])
+    return round_total
 
-intro_choices = ["LET US PREPARE TO WATCH THESE TWO TITANS BATTLE IT OUT: ",
-                 "TONIGHT IS ANOTHER CHAPER IN THE IMMORTAL BATTLE BETWEEN: ",
-                 "GATHER AROUND BECAUSE IT WILL BE A BLOOD BATH WHEN IT IS: ",
-                 "MARVEL AT THE AWESOMENESS WHEN YOU SEE THESE TWO FIGHT TO THE DEATH!!!: ",
-                 "GATHER AROUND AND BE A WITNESS TO THE UNDOING OF ALL YOU KNOW, WHEN IT IS: "]
+def print_round_winner(player, round_total):
+    print(f"{player} TAKES THE ROUND!!!")
 
-match_intro = choice(intro_choices)
-print(match_intro)
-print("{} VERSUS {}!!!!".format(
-    player_one, player_two))
+def print_round_tie():
+    print("ROUND ENDS IN A TIE!!!")
 
-# round one
-while rounds == 1 and throws <= 5:
-    print("ROUND NUMBER {}, THROW NUMBER {}".format(rounds, throws))
-    player_one_score = input("{} SCORES A: ".format(player_one))
-    player_two_score = input("{} SCORES A: ".format(player_two))
-    player_one_score_int = int(player_one_score)
-    player_two_score_int = int(player_two_score)
-    player_one_round_one_total = player_one_round_one_total + player_one_score_int
-    player_two_round_one_total = player_two_round_one_total + player_two_score_int
-    print("The score is {} {} AND {} {}".format(player_one,
-                                                player_one_round_one_total, player_two, player_two_round_one_total))
-    throws = throws + 1
-    if throws == 6:
-        p1_rd1_total = player_one_round_one_total
-        p2_rd1_total = player_two_round_one_total
-        if p1_rd1_total > p2_rd1_total:
-            print("{} TAKES ROUND ONE!!!".format(player_one))
-        if p2_rd1_total > p1_rd1_total:
-            print("{} TAKES ROUND ONE!!!)".format(player_two))
-        if p1_rd1_total == p2_rd1_total:
-            print("ROUND ONE ENDS IN A TIE!!!")
-        rounds = rounds + 1
-        while rounds == 2 and throws <= 10:
-            print("ROUND NUMBER {}, THROW NUMBER {}".format(rounds, throws-5))
-            player_one_score = input("{} SCORES A: ".format(player_one))
-            player_two_score = input("{} SCORES A: ".format(player_two))
-            player_one_score_int = int(player_one_score)
-            player_two_score_int = int(player_two_score)
-            player_one_round_two_total = player_one_round_two_total + player_one_score_int
-            player_two_round_two_total = player_two_round_two_total + player_two_score_int
-            print("The score is {} {} AND {} {}".format(player_one,
-                                                        player_one_round_two_total, player_two, player_two_round_two_total))
-            throws = throws + 1
-            if throws == 11:
-                p1_rd2_total = player_one_round_two_total
-                p2_rd2_total = player_two_round_two_total
-                if p1_rd2_total > p2_rd2_total:
-                    print("{} TAKES ROUND TWO!!!".format(player_one))
-                if p2_rd2_total > p1_rd2_total:
-                    print("{} TAKES ROUND TWO!!!)".format(player_two))
-                if p1_rd2_total == p2_rd2_total:
-                    print("ROUND TWO ENDS IN A TIE!!!")
-                rounds = rounds + 1
-            while rounds == 3 and throws < 16:
-                print("ROUND NUMBER {}, THROW NUMBER {}".format(rounds, throws-10))
-                player_one_score = input("{} SCORES A: ".format(player_one))
-                player_two_score = input("{} SCORES A: ".format(player_two))
-                player_one_score_int = int(player_one_score)
-                player_two_score_int = int(player_two_score)
-                player_one_round_three_total = player_one_round_three_total + player_one_score_int
-                player_two_round_three_total = player_two_round_three_total + player_two_score_int
-                print("The score is {} {} AND {} {}".format(player_one,
-                                                            player_one_round_three_total, player_two, player_two_round_three_total))
-                throws = throws + 1
-                if throws == 16:
-                    p1_rd3_total = player_one_round_two_total
-                    p2_rd3_total = player_two_round_two_total
-                    if p1_rd3_total > p2_rd3_total:
-                        print("{} TAKES ROUND THREE!!!".format(player_one))
-                    if p2_rd3_total > p1_rd3_total:
-                        print("{} TAKES ROUND THREE!!!)".format(player_two))
-                    if p1_rd3_total == p2_rd3_total:
-                        print("ROUND THREE ENDS IN A TIE!!!")
-                    print("THE MATCH IS OVER!!!")
-                    player_one_match_total = p1_rd1_total + p1_rd2_total + p1_rd3_total
-                    player_two_match_total = p2_rd1_total + p2_rd2_total + p2_rd3_total
-                    if player_one_match_total > player_two_match_total:
-                        print("AND THE WINNER IS: {} WITH A SCORE OF {} TO {}".format(
-                            player_one, player_one_match_total, player_two_match_total))
-                    if player_two_match_total > player_one_match_total:
-                        print("AND THE WINNER IS: {}!!! WITH A SCORE OF {} TO {}".format(
-                            player_two, player_two_match_total, player_one_match_total))
-                    if player_one_match_total == player_two_match_total:
-                        print("THE MATCH ENDS WITH {} SCORING {}, AND {} SCORING {}, WHICH IS A TIE... YOU KNOW WHAT THAT MEANS?! BIG AXE TIME!!!".format(
-                            player_one, player_one_match_total, player_two, player_two_match_total))
+def print_match_winner(winner, scores):
+    print(f"AND THE WINNER IS: {winner} WITH A SCORE OF {scores[winner]} TO {scores[1 - winner]}")
+
+def print_match_tie(scores):
+    print(f"THE MATCH ENDS WITH {scores[0]} SCORING {scores[0]}, AND {scores[1]} SCORING {scores[1]}, WHICH IS A TIE")
+
+def main():
+    print("WELCOME TO THE HOUSE OF AXE THROWING!!!!")
+    player_one = input("PLEASE ENTER THE NAME OF THE FIRST PLAYER: ").strip().upper()
+    player_two = input("PLEASE ENTER THE NAME OF THE SECOND PLAYER: ").strip().upper()
+    intro_choices = ["LET US PREPARE TO WATCH THESE TWO TITANS BATTLE IT OUT: ",
+                     "TONIGHT IS ANOTHER CHAPER IN THE IMMORTAL BATTLE BETWEEN: ",
+                     "GATHER AROUND BECAUSE IT WILL BE A BLOOD BATH WHEN IT IS: ",
+                     "MARVEL AT THE AWESOMENESS WHEN YOU SEE THESE TWO FIGHT TO THE DEATH!!!: ",
+                     "GATHER AROUND AND BE A WITNESS TO THE UNDOING OF ALL YOU KNOW, WHEN IT IS: "]
+    match_intro = choice(intro_choices)
+    print(match_intro)
+    print("{} VERSUS {}!!!!".format(player_one, player_two))
+
+    player_scores = [[0, 0], [0, 0], [0, 0]]  # [round][player]
+
+    for round_number in range(3):
+        round_scores = play_round(player_one, player_two, round_number + 1)
+        player_scores[round_number] = round_scores
+        round_winner = player_one if round_scores[0] > round_scores[1] else (player_two if round_scores[1] > round_scores[0] else None)
+        if round_winner:
+            print_round_winner(round_winner, round_scores)
+        else:
+            print_round_tie()
+
+    total_scores = [sum(scores) for scores in zip(*player_scores)]
+    match_winner = player_one if total_scores[0] > total_scores[1] else (player_two if total_scores[1] > total_scores[0] else None)
+    if match_winner:
+        print_match_winner(match_winner, total_scores)
+    else:
+        print_match_tie(total_scores)
+
+if __name__ == "__main__":
+    main()
